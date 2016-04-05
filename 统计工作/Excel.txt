@@ -1,0 +1,8 @@
+=COUNTIF(掠夺总榜!A$1:S$140,$A2)
+
+=COUNTIF(盟会战!A$1:S$140,$A2)
+
+=COUNTIF(帮战总榜!A$1:S$500,$A2)
+
+=COUNTIF(帮派活动!A$1:S$140,$A2)
+
