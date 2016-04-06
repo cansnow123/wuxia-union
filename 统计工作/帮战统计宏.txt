@@ -1,0 +1,38 @@
+Sub 帮战透明表处理()
+	'逐梦
+    Sheets("透明表").Select
+    Range("A2:C200").Select
+    Range("C200").Activate
+    Selection.Copy
+    Sheets("帮战总榜").Select
+    ActiveCell.Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+	'如梦	
+	Sheets("透明表").Select
+    Range("E2:G200").Select
+    Range("G200").Activate
+    Selection.Copy
+    Sheets("帮战总榜").Select
+    ActiveCell.Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+	'若梦	
+	Sheets("透明表").Select
+    Range("I2:K200").Select
+    Range("K200").Activate
+    Selection.Copy
+    Sheets("帮战总榜").Select
+    ActiveCell.Offset(0, 4).Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+	'何梦	
+	Sheets("透明表").Select
+    Range("M2:O200").Select
+    Range("O200").Activate
+    Selection.Copy
+    Sheets("帮战总榜").Select
+    ActiveCell.Offset(0, 4).Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, Transpose:=False
+End Sub
