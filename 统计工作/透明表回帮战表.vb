@@ -1,37 +1,37 @@
-Sub Í¸Ã÷±í»Ø°ïÕ½±í()
-    'ÖğÃÎ
-    Sheets("Í¸Ã÷±í").Select
+ï»¿Sub é€æ˜è¡¨å›å¸®æˆ˜è¡¨()
+    'é€æ¢¦
+    Sheets("é€æ˜è¡¨").Select
     Range("A2:C50").Select
     Range("C50").Activate
     Selection.Copy
-    Sheets("°ïÕ½×Ü°ñ").Select
+    Sheets("å¸®æˆ˜æ€»æ¦œ").Select
     ActiveCell.Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-    'ÈçÃÎ
-    Sheets("Í¸Ã÷±í").Select
+    'å¦‚æ¢¦
+    Sheets("é€æ˜è¡¨").Select
     Range("E2:G50").Select
     Range("G50").Activate
     Selection.Copy
-    Sheets("°ïÕ½×Ü°ñ").Select
+    Sheets("å¸®æˆ˜æ€»æ¦œ").Select
     ActiveCell.Offset(0, 4).Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-    'ÈôÃÎ
-    Sheets("Í¸Ã÷±í").Select
+    'è‹¥æ¢¦
+    Sheets("é€æ˜è¡¨").Select
     Range("I2:K50").Select
     Range("K50").Activate
     Selection.Copy
-    Sheets("°ïÕ½×Ü°ñ").Select
+    Sheets("å¸®æˆ˜æ€»æ¦œ").Select
     ActiveCell.Offset(0, 4).Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False
-    'ºÎÃÎ
-    Sheets("Í¸Ã÷±í").Select
+    'ä½•æ¢¦
+    Sheets("é€æ˜è¡¨").Select
     Range("M2:O50").Select
     Range("O50").Activate
     Selection.Copy
-    Sheets("°ïÕ½×Ü°ñ").Select
+    Sheets("å¸®æˆ˜æ€»æ¦œ").Select
     ActiveCell.Offset(0, 4).Select
     Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
         :=False, Transpose:=False

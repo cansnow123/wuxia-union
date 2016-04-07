@@ -1,4 +1,4 @@
-Sub 帮战统计出透明表()
+﻿Sub 帮战统计出透明表()
     '逐梦统计
         Sheets("透明表").Select
     Range("A1").Select
