@@ -9,3 +9,6 @@
 
 =COUNTIF(B:B,A1)
 A1在B列中是否出现过
+
+
+=VLOOKUP("*"&A1&"*",B:B,3,0)
