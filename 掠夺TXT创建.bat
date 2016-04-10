@@ -1,3 +1,3 @@
-echo >原始.txt
-echo >处理.txt
+锘縠cho >original.txt
+echo >processed.txt
 del %0%
