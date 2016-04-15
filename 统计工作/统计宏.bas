@@ -1,4 +1,4 @@
-Attribute VB_Name = "模块1"
+Attribute VB_Name = "模块11"
 Sub 透明表回帮战表()
     '逐梦
     Sheets("透明表").Select
@@ -43,7 +43,7 @@ Sub 帮战统计出透明表()
         Sheets("透明表").Select
     Range("A1").Select
     ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:= _
-        "帮战总榜!R1C1:R50C3", Version:=6).CreatePivotTable TableDestination:= _
+        "帮战总榜!R1C1:R107C3", Version:=6).CreatePivotTable TableDestination:= _
         "透明表!R1C1", TableName:="逐梦统计", DefaultVersion:=6
     Sheets("透明表").Select
     Cells(1, 1).Select
@@ -59,7 +59,7 @@ Sub 帮战统计出透明表()
         Sheets("透明表").Select
     Range("E1").Select
     ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:= _
-        "帮战总榜!R1C5:R50C7", Version:=6).CreatePivotTable TableDestination:= _
+        "帮战总榜!R1C5:R107C7", Version:=6).CreatePivotTable TableDestination:= _
         "透明表!R1C5", TableName:="如梦统计", DefaultVersion:=6
     Sheets("透明表").Select
     Cells(1, 5).Select
@@ -75,7 +75,7 @@ Sub 帮战统计出透明表()
         Sheets("透明表").Select
     Range("I1").Select
     ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:= _
-        "帮战总榜!R1C9:R50C11", Version:=6).CreatePivotTable TableDestination:= _
+        "帮战总榜!R1C9:R107C11", Version:=6).CreatePivotTable TableDestination:= _
         "透明表!R1C9", TableName:="若梦统计", DefaultVersion:=6
     Sheets("透明表").Select
     Cells(1, 9).Select
@@ -91,7 +91,7 @@ Sub 帮战统计出透明表()
         Sheets("透明表").Select
     Range("M1").Select
     ActiveWorkbook.PivotCaches.Create(SourceType:=xlDatabase, SourceData:= _
-        "帮战总榜!R1C13:R50C15", Version:=6).CreatePivotTable TableDestination:= _
+        "帮战总榜!R1C13:R107C15", Version:=6).CreatePivotTable TableDestination:= _
         "透明表!R1C13", TableName:="何梦统计", DefaultVersion:=6
     Sheets("透明表").Select
     Cells(1, 13).Select
