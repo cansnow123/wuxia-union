@@ -1,3 +1,5 @@
-﻿echo >original.txt
-echo >processed.txt
+﻿echo >Original.txt
+echo >Processed.txt
+echo >Valid.txt
+echo >YY_List.txt
 del %0%
