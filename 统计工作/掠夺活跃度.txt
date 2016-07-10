@@ -1,0 +1,26 @@
+﻿C G K O S
+
+=COUNTIF(掠夺总榜!$C:$C,"AAA")
+=COUNTIF(掠夺总榜!$C:$C,"BBB")
+=COUNTIF(掠夺总榜!$C:$C,"CCC")
+=COUNTIF(掠夺总榜!$C:$C,"DDD")
+
+=COUNTIF(掠夺总榜!$G:$G,"AAA")
+=COUNTIF(掠夺总榜!$G:$G,"BBB")
+=COUNTIF(掠夺总榜!$G:$G,"CCC")
+=COUNTIF(掠夺总榜!$G:$G,"DDD")
+
+=COUNTIF(掠夺总榜!$K:$K,"AAA")
+=COUNTIF(掠夺总榜!$K:$K,"BBB")
+=COUNTIF(掠夺总榜!$K:$K,"CCC")
+=COUNTIF(掠夺总榜!$K:$K,"DDD")
+
+=COUNTIF(掠夺总榜!$O:$O,"AAA")
+=COUNTIF(掠夺总榜!$O:$O,"BBB")
+=COUNTIF(掠夺总榜!$O:$O,"CCC")
+=COUNTIF(掠夺总榜!$O:$O,"DDD")
+
+=COUNTIF(掠夺总榜!$S:$S,"AAA")
+=COUNTIF(掠夺总榜!$S:$S,"BBB")
+=COUNTIF(掠夺总榜!$S:$S,"CCC")
+=COUNTIF(掠夺总榜!$S:$S,"DDD")

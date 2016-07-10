@@ -1,0 +1,9 @@
+echo >一帮四海.txt
+echo >一帮救火.txt
+echo >二帮四海.txt
+echo >二帮救火.txt
+echo >三帮四海.txt
+echo >三帮救火.txt
+echo >四帮四海.txt
+echo >四帮救火.txt
+del %0%
