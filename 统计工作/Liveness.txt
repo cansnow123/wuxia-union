@@ -24,3 +24,14 @@
 	IF(COUNTIF(D:D,$A1),"2",
 	IF(COUNTIF(E:E,$A1),"3",
 	IF(COUNTIF(F:F,$A1),"4","鬼"))))
+	
+=IF(B2<>"",B1,
+ IF(C2<>"",C1,
+ IF(D2<>"",D1,
+ IF(E2<>"",E1,
+ IF(F2<>"",F1,
+ IF(G2<>"",G1,"null"))))))
+ 
+=IF(B2<>"",B$1,IF(C2<>"",C$1,IF(D2<>"",D$1,IF(E2<>"",E$1,IF(F2<>"",F$1,IF(G2<>"",G$1,"null"))))))
+
+yy://pd-[sid=62953319&subid=2534133162]/[62953319]
