@@ -24,7 +24,7 @@
 	IF(COUNTIF(D:D,$A1),"2",
 	IF(COUNTIF(E:E,$A1),"3",
 	IF(COUNTIF(F:F,$A1),"4","鬼"))))
-	
+
 =IF(B2<>"",B1,
  IF(C2<>"",C1,
  IF(D2<>"",D1,

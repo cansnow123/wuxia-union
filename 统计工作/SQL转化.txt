@@ -1,0 +1,11 @@
+行首
+^\b
+行尾
+$\b
+
+'\);
+中间
+','
+
+AAA
+INSERT INTO `wuxia`.`reward` (`id`, `guild_num`,`rob`, `society_war`,`guild_act`,`guild_war`,`sum_re`,`real_re`,`mon_st`)VALUES ('
