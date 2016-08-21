@@ -1,1 +1,3 @@
 ﻿http://channel.yy.com/ajax/channel/members/operation!changeMemberRole.action?sid=48309424&uids=第一个UID%2C第二个UID&newrole=visitor&vrp=r&dialogOpts=%5Bobject+Object%5D&token=undefined
+
+http://channel.yy.com/ajax/channel/members/operation!queryMembersOfChannel.action?_=1471006882281&sid=48309424&roleName=member&size=35&pageNum=9
