@@ -2,40 +2,34 @@
 # -*- coding: utf-8 -*-
 
 import re
-import os
 
 
 def convert(str_line):
-    # 删除行首数字
-    s1 = re.sub("^^\d+ ", "", str_line)
-    # 删除0战绩
-    s2 = re.sub(" \d+ \d+ \d+", "", s1)
-    # 删除职业
-    s3 = re.sub(" 天香| 太白| 五毒| 神威| 真武| 丐帮| 唐门| 神刀", "", s2)
-    s4 = re.sub("\s*$", "", s3)
     # 空格换成制表符
-    s5 = re.sub(" ", "	", s4)
-    # 空行处理最终保留数据依次为 ID、荣誉数、击杀、助攻
-    return s5
+    s1 = str_line.strip()
+    s2 = re.sub(" ", "	", s1)
+    return s2.split('	')[:2]
+
+
+def get_num(file):
+    with open(file, 'r', encoding='utf-8') as pre:
+        lines = pre.readlines()
+        for xl in range(len(lines)):
+            mk1 = int(convert(lines[xl])[0])
+            mk2 = int(convert(lines[xl-1])[0])
+            if (mk1 > 1) & (mk2 == 1) & (xl < 200) & (xl != 1):
+                return xl
 
 File_list = ["1.txt", "2.txt", "3.txt", "4.txt"]
 Con_list = ["Member_List_1.txt", "Member_List_2.txt", "Member_List_3.txt", "Member_List_4.txt"]
 
-if os.path.exists("1.txt") or os.path.exists("2.txt") or os.path.exists("3.txt") or os.path.exists("4.txt"):
-    print("请确认当前目录下存在 1.txt 2.txt 3.txt 4.txt文件\n")
-    input("")
-    exit()
+print("请务必确认当前目录下存在 1.txt 2.txt 3.txt 4.txt文件\n")
+
 
 for x in [0, 1, 2, 3]:
     with open(File_list[x], 'r', encoding='utf-8') as Pre:
+        lls = Pre.readlines()
+        num = get_num(File_list[x])
         with open(Con_list[x], 'w', encoding='utf-8') as Con:
-            jud = Pre.readlines()
-            if len(jud) > 152:
-                for n in range(len(jud)):
-                    if (jud[n][0:4] == jud[0][0:4]) & (n > 0 & n<300):
-                        mk_st = n
-                for m in range(mk_st):
-                    Con.write(convert(jud[m])+'\n')
-            else:
-                for i in Pre:
-                    Con.write(convert(i)+'\n')
+            for n in range(num-1):
+                Con.write(convert(lls[n])[1]+'\n')
