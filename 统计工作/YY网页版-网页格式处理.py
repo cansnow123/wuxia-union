@@ -3,7 +3,7 @@ import re
 
 
 def rp_fun(list_str):
-    rp = re.sub("^.*梦◥", "", list_str)
+    rp = re.sub("^✎雙.*»\s?", "", list_str)
     rp1 = re.sub("\s*【.*$|在线", "", rp)
     rp2 = re.sub("[ ]+\w+$", "", rp1)
     return rp2

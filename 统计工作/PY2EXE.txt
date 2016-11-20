@@ -1,6 +1,6 @@
 pyinstaller -w -F --icon="lm.ico" *.py
-
-
+pyinstaller -w -F --icon="lm.ico" 帮派DKP文件处理-导出名单.py
+pyinstaller -c -F --icon="lm.ico" 联盟DKP文件处理-导出详单.py
 
 -F, --onefile Py代码只有一个文件
  
