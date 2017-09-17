@@ -1,0 +1,33 @@
+http://channel.yy.com/ajax/channel/members/operation!changeMemberRole.action?sid=48309424&uids=761529277&newrole=visitor&data=r-vip-88&vrp=r&dialogOpts=%5Bobject+Object%5D&token=undefined
+
+http://channel.yy.com/ajax/channel/members/operation!changeMemberRole.action?sid=48309424&uids=761529277&newrole=visitor
+撤销会员资格
+http://channel.yy.com/ajax/channel/members/operation!changeMemberRole.action?sid=48309424&uids=123%2C321&newrole=member
+
+获取全员
+http://channel.yy.com/ajax/channel/members/operation!queryMembersOfChannel.action?_=1474427683392&sid=48309424&roleName=total&pageNum=1
+会员
+http://channel.yy.com/ajax/channel/members/operation!queryMembersOfChannel.action?_=1474427683392&sid=48309424&roleName=member&pageNum=1
+
+UPDATE wuxia.yy_blue_member SET role=REPLACE(role, 'CMANAGER', 'MEMBER') where (role = 'CMANAGER'  AND (not nickName like '%◣%'))
+
+UPDATE wuxia.reward SET role=REPLACE(role, '2016-09-18', '2016-09-16')
+
+删除列：
+alter table wuxia.`2016-09-26` drop column ;
+
+=vlookup(K3,F$3:G$600,2,0)-vlookup(K3,A$3:B$600,2,0)
+=vlookup(K3,F$3:I$600,4,0)-vlookup(K3,A$3:D$600,4,0)
+
+=vlookup(K3,e$3:G$600,3,0)
+
+UID	贡献	昵称	在线时长
+where nickName like '%梦◥%'
+
+
+uid:1459298336
+nickName:小号
+yyNo:1630319542
+jifen:1141
+userExpiredTime:1475422705352
+=IF(AND(B2>=70,B2<140),B2*1,IF(AND(B2>=140,B2<600),B2*1.5,IF(B2>=600,B2*2)))
