@@ -8,23 +8,15 @@ def cvl(line):
     step2 = re.sub("\s*(龙首|长老|副龙首|无职位|特需官)\s*", "\t", step1)
     return step2
 
+
+UnionNameList = []
 with open("LianMeng_DKP.txt", 'r', encoding='utf-8') as LMD:
-    lines = LMD.readlines()
-    if "PVE" in lines[1]:
-        with open("Converted_LianMeng_DKP_PVE.txt", 'w', encoding='utf-8') as LMDC:
-            for l in lines:
-                if "本周" in l or "PVE" in l or "PVP" in l:
-                    pass
-                elif "消耗" in l:
-                    LMDC.write("帮众\t帮派\n")
-                else:
-                    LMDC.write(cvl(l)+"\n")
-    elif "PVP" in lines[1]:
-        with open("Converted_LianMeng_DKP_PVP.txt", 'w', encoding='utf-8') as LMDC:
-            for l in lines:
-                if "本周" in l or "PVE" in l or "PVP" in l:
-                    pass
-                elif "消耗" in l:
-                    LMDC.write("帮众\t帮派\n")
-                else:
-                    LMDC.write(cvl(l)+"\n")
+    for l in LMD.readlines():
+        if "本周" in l or "PVE" in l or "PVP" in l:
+            pass
+        elif "消耗" in l:
+            pass
+        else:
+            UnionNameList.append(cvl(l).split('\t'))
+
+print(UnionNameList)

@@ -1,4 +1,5 @@
 import datetime
+import re
 
 today = datetime.date.today()
 dates = []
@@ -10,9 +11,18 @@ for x in range(7):
 print("本周日期：", weekdays)
 
 
+def cvl(line):
+    # 删除消耗
+    step1 = re.sub("\s*\d+\s*\d+\s*\d+\s*$", "", line)
+    # 删除帮众名空白至帮派间空白()包括职位
+    step2 = re.sub("\s*(龙首|长老|副龙首|无职位|特需官)\s*", "\t", step1)
+    return step2
+
+
 class ItemRecord:
     def __init__(self):
         self.id = ''  # ID
+        self.ga = ''  # 帮派
         self.wr = 0  # 委任
         self.zx = 0  # 醉虾
         self.jh = 0  # 血战海河
@@ -21,6 +31,18 @@ class ItemRecord:
         self.zf = 0  # 争锋
 
 
+UnionNameList = []
+with open("LianMeng_DKP.txt", 'r', encoding='utf-8') as LMD:
+    for l in LMD.readlines():
+        if "本周" in l or "PVE" in l or "PVP" in l:
+            pass
+        elif "消耗" in l:
+            pass
+        else:
+            UnionNameList.append(cvl(l).split('\t'))
+
+UnionNameDict = {UnionNameList[i][0]: UnionNameList[i][1] for i in range(len(UnionNameList))}
+# print(UnionNameDict)
 Temp = [[] for x in range(600)]
 with open("LianMeng_DKPModifyRecord.txt", 'r', encoding='utf-8') as DKPRecord:
     cot = 0
@@ -46,7 +68,9 @@ ItemEasy = []
 for preid in ItemList:
     newItemRecord = ItemRecord()
     newRecord = ''
-    newItemRecord.id = preid[0]
+    newItemRecord.id = preid[0].split()[0]
+    newItemRecord.ga = UnionNameDict[newItemRecord.id]
+    # print(newItemRecord.ga)
     for x in preid[1:]:
         for d in weekdays:
             if d in x:
@@ -60,7 +84,9 @@ for preid in ItemList:
                 newItemRecord.zf = newRecord.count('争锋战')
     ItemEasy.append(newItemRecord)
 
-with open("Simplified.txt", 'w', encoding='utf-8') as Simp:
-    Simp.write("ID\t帮派委任\t帮派醉侠\t血战海河\t帮派战场\t掠夺战\t争锋战\n")
+with open("SimpliFied.txt", 'w', encoding='utf-8') as Simp:
+    Simp.write("ID\t帮派\t委任\t醉侠\t血战\t战场\t掠夺\t争锋\n")
     for ind in ItemEasy:
-        Simp.write(str(ind.id.split()[0])+'\t'+str(ind.wr)+'\t'+str(ind.zx)+'\t'+str(ind.jh)+'\t'+str(ind.zc)+'\t'+str(ind.ld)+'\t'+str(ind.zf)+'\n')
+        Simp.write(str(ind.id) + '\t' + str(ind.ga) + '\t' + str(ind.wr) + '\t' + str(ind.zx) + '\t' + str(
+            ind.jh) + '\t' + str(
+            ind.zc) + '\t' + str(ind.ld) + '\t' + str(ind.zf) + '\n')
