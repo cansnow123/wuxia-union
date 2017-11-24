@@ -3,7 +3,7 @@ from xlrd import *
 # Template
 Template = "发放激励\n领取情况\t帮众\t等级\t职位\t剩余PVP-DKP\t修改PVP-DKP\t剩余PVE-DKP\t修改PVE-DKP\t发放数量\n"
 GLFile = "BangPai_DKPFaFangJiLi.txt"
-SLFile = "BangPai_DKPFaFangJiLi银.txt"
+SLFile = "BangPai_DKPFaFangJiLi.txt银"
 
 with open(GLFile, 'w', encoding='utf-8') as init_gf:
     init_gf.write(Template)
@@ -41,7 +41,7 @@ def sh2arr(sh):
     temp = []
     for row in range(1, sh.nrows):
         cell_v = []
-        if sh.cell(row, 0).value != "":
+        if sh.cell(row, 0).value != ("" or "None"):
             cell_v.append(rpj(sh.cell(row, 0).value))
             cell_v.append(int(sh.cell(row, 5).value))
         else:
@@ -59,12 +59,20 @@ UNIONL = sh2arr(sheet)
 for x in range(len(UNIONL)):
     # 银箱子
     with open(SLFile, 'a', encoding='utf-8') as SLF:
-        if UNIONL[x][1] == (8 or 7):
+        if UNIONL[x][1] == 8:
             SLF.write("8/8\t" + UNIONL[x][0] + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
-        elif UNIONL[x][1] == (6 or 5):
+        elif UNIONL[x][1] == 7:
+            SLF.write("8/8\t" + UNIONL[x][0] + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
+        elif UNIONL[x][1] == 6:
+            SLF.write("8/8\t" + UNIONL[x][0] + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
+        elif UNIONL[x][1] == 5:
+            SLF.write("8/8\t" + UNIONL[x][0] + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
+        elif UNIONL[x][1] == 4:
+            SLF.write("6/8\t" + UNIONL[x][0] + "\t95\tX\t0\t0\t0\t0\t6" + "\n")
+        elif UNIONL[x][1] == 3:
+            SLF.write("6/8\t" + UNIONL[x][0] + "\t95\tX\t0\t0\t0\t0\t6" + "\n")
+        elif UNIONL[x][1] == 2:
             SLF.write("4/8\t" + UNIONL[x][0] + "\t95\tX\t0\t0\t0\t0\t4" + "\n")
-        elif UNIONL[x][1] == (4 or 3):
-            SLF.write("2/8\t" + UNIONL[x][0] + "\t95\tX\t0\t0\t0\t0\t2" + "\n")
         else:
             pass
     # 金箱子

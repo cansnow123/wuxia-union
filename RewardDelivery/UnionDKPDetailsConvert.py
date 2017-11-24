@@ -1,10 +1,14 @@
 import datetime
 import re
+import pytz
+import time
 
-today = datetime.date.today()
+tz = pytz.timezone('Asia/Hong_Kong')
+bj = datetime.datetime.now(tz)
+
 dates = []
-for i in range(0 - today.weekday(), 9 - today.weekday()):
-    dates.append(today + datetime.timedelta(days=i))
+for i in range(0 - bj.weekday(), 9 - bj.weekday()):
+    dates.append(bj + datetime.timedelta(days=i))
 weekdays = []
 for x in range(7):
     weekdays.append(dates[x].strftime("%Y/%m/%d"))
@@ -41,8 +45,9 @@ with open("LianMeng_DKP.txt", 'r', encoding='utf-8') as LMD:
         else:
             UnionNameList.append(cvl(l).split('\t'))
 
+# 格式 ID 帮派
 UnionNameDict = {UnionNameList[i][0]: UnionNameList[i][1] for i in range(len(UnionNameList))}
-# print(UnionNameDict)
+print(UnionNameDict)
 Temp = [[] for x in range(600)]
 with open("LianMeng_DKPModifyRecord.txt", 'r', encoding='utf-8') as DKPRecord:
     cot = 0
@@ -55,7 +60,7 @@ with open("LianMeng_DKPModifyRecord.txt", 'r', encoding='utf-8') as DKPRecord:
 # print(Temp[cot-1]) 最后一人
 ItemList = Temp[:cot - 1]
 
-# 联盟DKP记录单周简化版详单
+# 联盟DKP记录单周简化版详单写入
 with open("SimDetails.txt", 'w', encoding='utf-8') as RecordSimple:
     for preid in ItemList:
         RecordSimple.write(preid[0])
@@ -69,7 +74,13 @@ for preid in ItemList:
     newItemRecord = ItemRecord()
     newRecord = ''
     newItemRecord.id = preid[0].split()[0]
-    newItemRecord.ga = UnionNameDict[newItemRecord.id]
+    try:
+        newItemRecord.ga = UnionNameDict[newItemRecord.id]
+    except KeyError:
+        print("KeyError: Can't find the key item:" + newItemRecord.id)
+        time.sleep(5)
+    else:
+        pass
     # print(newItemRecord.ga)
     for x in preid[1:]:
         for d in weekdays:
@@ -84,9 +95,15 @@ for preid in ItemList:
                 newItemRecord.zf = newRecord.count('争锋战')
     ItemEasy.append(newItemRecord)
 
-with open("SimpliFied.txt", 'w', encoding='utf-8') as Simp:
+with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
     Simp.write("ID\t帮派\t委任\t醉侠\t血战\t战场\t掠夺\t争锋\n")
     for ind in ItemEasy:
         Simp.write(str(ind.id) + '\t' + str(ind.ga) + '\t' + str(ind.wr) + '\t' + str(ind.zx) + '\t' + str(
             ind.jh) + '\t' + str(
             ind.zc) + '\t' + str(ind.ld) + '\t' + str(ind.zf) + '\n')
+
+
+# with open("DirectRewardFile.txt", 'w', encoding = 'utf-8') as DD:
+#     DD.write("ID\t帮派\t委任\t醉侠\t血战\t战场\t掠夺\t争锋\t箱子\n")
+#     for ind in DD:
+#         6+wetwet
