@@ -2,7 +2,6 @@ import datetime
 import pytz
 import time
 import re
-import os
 import shutil
 import xlsxwriter
 
@@ -234,5 +233,10 @@ worksheet.filter_column_list('B', ['双生逐梦'])
 workbook.close()
 xlsx_file_name = re.sub(r'\/', '', str('逐梦' + weekdays[6] + '.xlsx'))
 print(xlsx_file_name)
+
 shutil.move('逐梦.xlsx', xlsx_file_name)
-# os.system('del 逐梦.xlsx')
+shutil.copy(xlsx_file_name, 'D:\Git-Source\wuxia-union\天雪初晴-双生逐梦-XLSX')
+
+shutil.copyfile('BangPai_DKPFaFangJiLi.txt', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txt')
+shutil.copyfile('BangPai_DKPFaFangJiLi.txt银', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txt银')
+
