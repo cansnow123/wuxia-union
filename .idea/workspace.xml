@@ -2,17 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc7871ce-36b6-4146-821a-5f08b0f7a7ba" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/RewardDelivery/BangPai_DKPFaFangJiLi.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/RewardDelivery/BangPai_DKPFaFangJiLi.txt银" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/RewardDelivery/ExcelData2DeliveryData.py" afterPath="$PROJECT_DIR$/RewardDelivery/ExcelData2DeliveryData.py" />
-      <change beforePath="$PROJECT_DIR$/逐梦20171126.xlsx" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/逐梦20171203.xlsx" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/逐梦20171211.xlsx" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/逐梦20171217.xlsx" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/逐梦20171224.xlsx" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/逐梦20180107.xlsx" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/逐梦20180114.xlsx" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/逐梦20180121.xlsx" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/统计工作/TXT转MySQL.py" afterPath="$PROJECT_DIR$/统计工作/TXT转MySQL.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -46,7 +37,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ExcelData2DeliveryData.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ExcelData2DeliveryData.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RewardDelivery/ExcelData2DeliveryData.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="112">
@@ -54,6 +45,16 @@
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TXT转MySQL.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/统计工作/TXT转MySQL.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="380">
+              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -168,6 +169,11 @@
               <item name="wuxia-union" type="462c0819:PsiDirectoryNode" />
               <item name="RewardDelivery" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="wuxia-union" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wuxia-union" type="462c0819:PsiDirectoryNode" />
+              <item name="统计工作" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -278,7 +284,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/RewardDelivery/UnionDKPDetailsConvert.py" />
     <entry file="file://$PROJECT_DIR$/RewardDelivery/RewardDelivery.py" />
     <entry file="file://$PROJECT_DIR$/RewardDelivery/UnionDKPDetailsConvert.py" />
     <entry file="file://$PROJECT_DIR$/RewardDelivery/RewardDelivery.py" />
@@ -405,6 +410,14 @@
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/统计工作/TXT转MySQL.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
