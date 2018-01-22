@@ -231,7 +231,7 @@ for n in range(len(pre_list)):
 worksheet.autofilter(0, 1, 599, 1)
 worksheet.filter_column_list('B', ['双生逐梦'])
 workbook.close()
-xlsx_file_name = re.sub(r'\/', '', str('逐梦' + weekdays[6] + '.xlsx'))
+xlsx_file_name = re.sub(r'/', '', str('逐梦' + weekdays[6] + '.xlsx'))
 print(xlsx_file_name)
 
 shutil.move('逐梦.xlsx', xlsx_file_name)
