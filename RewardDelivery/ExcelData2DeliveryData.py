@@ -156,7 +156,7 @@ with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
 # 奖励发放 Template
 Template = "发放激励\n领取情况\t帮众\t等级\t职位\t剩余PVP-DKP\t修改PVP-DKP\t剩余PVE-DKP\t修改PVE-DKP\t发放数量\n"
 GLFile = "BangPai_DKPFaFangJiLi.txt"
-SLFile = "BangPai_DKPFaFangJiLi.txt银"
+SLFile = "BangPai_DKPFaFangJiLi.txts"
 
 with open(GLFile, 'w', encoding='utf-8') as init_gf:
     init_gf.write(Template)
@@ -238,6 +238,6 @@ shutil.move(xlsx_file_name, 'D:\Git-Source\wuxia-union\天雪初晴-双生逐梦
 os.system("explorer D:\Git-Source\wuxia-union\天雪初晴-双生逐梦-XLSX")
 
 shutil.copyfile('BangPai_DKPFaFangJiLi.txt', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txt')
-shutil.copyfile('BangPai_DKPFaFangJiLi.txt银', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txt银')
+shutil.copyfile('BangPai_DKPFaFangJiLi.txts', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txts')
 os.system("explorer D:\Wuxia\天涯明月刀\DKPData")
 
