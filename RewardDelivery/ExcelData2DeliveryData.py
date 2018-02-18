@@ -1,4 +1,5 @@
 import datetime
+import os
 import pytz
 import time
 import re
@@ -6,11 +7,11 @@ import shutil
 import xlsxwriter
 
 tz = pytz.timezone('Asia/Hong_Kong')
-bj = datetime.datetime.now(tz)
+hk = datetime.datetime.now(tz)
 
 dates = []
-for i in range(0 - bj.weekday(), 9 - bj.weekday()):
-    dates.append(bj + datetime.timedelta(days=i))
+for i in range(0 - hk.weekday(), 9 - hk.weekday()):
+    dates.append(hk + datetime.timedelta(days=i))
 weekdays = []
 for x in range(7):
     weekdays.append(dates[x].strftime("%Y/%m/%d"))
@@ -49,10 +50,16 @@ def event2dkp(num):
         defaultrw += 3 * BaseDKP
     else:
         defaultrw += (num.wr // 7) * BaseDKP
-    # 醉虾
-    defaultrw += num.zx * BaseDKP
-    # 血战海河
-    defaultrw += num.jh * BaseDKP
+    if num.ga == '万星楼':
+        if num.zx and num.jh:
+            defaultrw += BaseDKP
+        else:
+            pass
+    else:
+        # 醉虾
+        defaultrw += num.zx * BaseDKP
+        # 血战海河
+        defaultrw += num.jh * BaseDKP
     # 帮派战场
     defaultrw += num.zc * BaseDKP
     # 掠夺
@@ -85,17 +92,12 @@ class ItemRecord:
 
 UnionNameList = []
 with open("LianMeng_DKP.txt", 'r', encoding='utf-8') as LMD:
-    for l in LMD.readlines():
-        if "本周" in l or "PVE" in l or "PVP" in l:
-            pass
-        elif "消耗" in l:
-            pass
-        else:
-            UnionNameList.append(cvl(l).split('\t'))
+    for l in LMD.readlines()[3:]:
+        UnionNameList.append(cvl(l).split('\t'))
 
 # 格式 ID 帮派
 UnionNameDict = {UnionNameList[i][0]: UnionNameList[i][1] for i in range(len(UnionNameList))}
-print(UnionNameDict)
+# print(UnionNameDict)
 Temp = [[] for x in range(600)]
 with open("LianMeng_DKPModifyRecord.txt", 'r', encoding='utf-8') as DKPRecord:
     cot = 0
@@ -151,8 +153,7 @@ with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
                    + str(event2dkp(ind)) + '\t' + str(rw(event2dkp(ind))) + '\n')
 
 
-# 奖励发放
-# Template
+# 奖励发放 Template
 Template = "发放激励\n领取情况\t帮众\t等级\t职位\t剩余PVP-DKP\t修改PVP-DKP\t剩余PVE-DKP\t修改PVE-DKP\t发放数量\n"
 GLFile = "BangPai_DKPFaFangJiLi.txt"
 SLFile = "BangPai_DKPFaFangJiLi.txt银"
@@ -164,10 +165,8 @@ with open(SLFile, 'w', encoding='utf-8') as init_sf:
 
 # 激励文件部署
 with open("ExcelData.txt", 'r', encoding='utf-8') as Simpw:
-    for X in Simpw.readlines():
-            if "DKP" in X:
-                pass
-            elif int(X.split()[9]) == 0:
+    for X in Simpw.readlines()[1:]:
+            if int(X.split()[9]) == 0:
                 pass
             else:
                 # 银箱子
@@ -235,8 +234,10 @@ xlsx_file_name = re.sub(r'/', '', str('逐梦' + weekdays[6] + '.xlsx'))
 print(xlsx_file_name)
 
 shutil.move('逐梦.xlsx', xlsx_file_name)
-shutil.copy(xlsx_file_name, 'D:\Git-Source\wuxia-union\天雪初晴-双生逐梦-XLSX')
+shutil.move(xlsx_file_name, 'D:\Git-Source\wuxia-union\天雪初晴-双生逐梦-XLSX')
+os.system("explorer D:\Git-Source\wuxia-union\天雪初晴-双生逐梦-XLSX")
 
 shutil.copyfile('BangPai_DKPFaFangJiLi.txt', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txt')
 shutil.copyfile('BangPai_DKPFaFangJiLi.txt银', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txt银')
+os.system("explorer D:\Wuxia\天涯明月刀\DKPData")
 
