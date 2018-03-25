@@ -61,7 +61,13 @@ def event2dkp(num):
         # 血战海河
         defaultrw += num.jh * BaseDKP
     # 帮派战场
-    defaultrw += num.zc * BaseDKP
+    if num.ga == '万星楼':
+        if num.zc == 2:
+            defaultrw += num.zc * BaseDKP * 3
+        else:
+            defaultrw += num.zc * BaseDKP
+    else:
+        defaultrw += num.zc * BaseDKP
     # 掠夺
     defaultrw += num.ld * BaseDKP
     # 争锋
