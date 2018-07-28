@@ -5,6 +5,7 @@ import time
 import re
 import shutil
 import xlsxwriter
+
 BaseDKP = 15
 
 tz = pytz.timezone('Asia/Hong_Kong')
@@ -17,6 +18,7 @@ weekdays = []
 for x in range(7):
     weekdays.append(dates[x].strftime("%Y/%m/%d"))
 print(weekdays)
+
 
 def event2dkp(num):
     defaultrw = 0
@@ -55,6 +57,7 @@ def reward(dkp):
         return 8
     else:
         return dkp // BaseDKP
+
 
 def cvl(line):
     # # 删除消耗
