@@ -10,7 +10,10 @@ GLFile = "BangPai_DKPFaFangJiLi.txt"
 SLFile = "BangPai_DKPFaFangJiLi.txts"
 
 # Past File Clean
-os.system("del Bangpai_DKPFa*")
+try:
+    os.system("del Bangpai_DKPFa*.txt")
+except OSError:
+    print("Past files have already been cleaned.")
 
 tz = pytz.timezone('Asia/Hong_Kong')
 hk = datetime.datetime.now(tz)
@@ -52,30 +55,30 @@ def eventsimp(event):
     return simevent
 
 
-def reward(num):
+def rewardcalc(member):
     defaultrw = 0
     # 委任
-    if num.wr > 21:
+    if member.wr > 21:
         defaultrw += 3
     else:
-        defaultrw += (num.wr // 7)
+        defaultrw += (member.wr // 7)
 
     # 醉虾 血战海河
-    if num.zx and num.jh:
+    if member.zx and member.jh:
         defaultrw += 1
 
     # 帮派战场
-    if num.zc == 2:
+    if member.zc == 2:
         defaultrw += 3
     else:
         # 1或0
-        defaultrw += num.zc
+        defaultrw += member.zc
 
     # 掠夺
-    defaultrw += num.ld
+    defaultrw += member.ld
 
     # 争锋
-    defaultrw += num.zf * 2
+    defaultrw += member.zf * 2
 
     if defaultrw >= 8:
         return 8
@@ -86,12 +89,13 @@ def reward(num):
 class SingleRecord:
     def __init__(self):
         self.id = ''  # ID
-        self.wr = 0  # 委任
-        self.zx = 0  # 醉虾
+        self.wr = 0  # 委任数量
+        self.zx = 0  # 周六醉侠
         self.jh = 0  # 血战海河
         self.zc = 0  # 帮派战场
-        self.ld = 0  # 掠夺
-        self.zf = 0  # 争锋
+        self.ld = 0  # 掠夺战
+        self.zf = 0  # 争锋战
+        self.xz = 0  # 箱子
 
 
 # 保存帮派名单至 BangPaiNameList
@@ -142,7 +146,12 @@ for MemberRecord in BangPaiDKPList:
     newSingleRecord.zc = newRecord.count('帮派跨服战场')
     newSingleRecord.ld = newRecord.count('掠夺战')
     newSingleRecord.zf = newRecord.count('争锋战')
+    newSingleRecord.xz = rewardcalc(newSingleRecord)
     TableData.append(newSingleRecord)
+
+# 优先按箱子数量降序排列其次为委任
+# 使数据在EXCEL内美观
+TableData.sort(key=lambda member: (member.xz, member.wr), reverse=True)
 
 with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
     Simp.write("ID\t委任*10\t醉侠\t血战\t战场\t掠夺\t争锋\t箱子\n")
@@ -154,55 +163,52 @@ with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
                    + str(ind.zc) + '\t'
                    + str(ind.ld) + '\t'
                    + str(ind.zf) + '\t'
-                   + str(reward(ind)) + '\n')
+                   + str(ind.zx) + '\n')
 
 # 激励文件部署
 with open("ExcelData.txt", 'r', encoding='utf-8') as Simpw:
     for X in Simpw.readlines()[1:]:
-        if int(X.split()[8]) == 0:
+        if int(X.split()[7]) == 0:
             pass
         else:
             # 银箱子
             with open(SLFile, 'a', encoding='utf-8') as SLF:
-                if int(X.split()[8]) == 8:
+                if int(X.split()[7]) == 8:
                     SLF.write("8/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
-                elif int(X.split()[8]) == 7:
+                elif int(X.split()[7]) == 7:
                     SLF.write("8/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
-                elif int(X.split()[8]) == 6:
+                elif int(X.split()[7]) == 6:
                     SLF.write("6/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t6" + "\n")
-                elif int(X.split()[8]) == 5:
+                elif int(X.split()[7]) == 5:
                     SLF.write("5/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t5" + "\n")
-                elif int(X.split()[8]) == 4:
+                elif int(X.split()[7]) == 4:
                     SLF.write("4/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t4" + "\n")
-                elif int(X.split()[8]) == 3:
+                elif int(X.split()[7]) == 3:
                     SLF.write("3/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t3" + "\n")
-                elif int(X.split()[8]) == 2:
+                elif int(X.split()[7]) == 2:
                     SLF.write("2/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t2" + "\n")
                 else:
                     pass
             # 金箱子
             with open(GLFile, 'a', encoding='utf-8') as JLF:
-                if int(X.split()[8]) == 8:
+                if int(X.split()[7]) == 8:
                     JLF.write("8/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
-                elif int(X.split()[8]) == 7:
+                elif int(X.split()[7]) == 7:
                     JLF.write("7/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t7" + "\n")
-                elif int(X.split()[8]) == 6:
+                elif int(X.split()[7]) == 6:
                     JLF.write("6/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t6" + "\n")
-                elif int(X.split()[8]) == 5:
+                elif int(X.split()[7]) == 5:
                     JLF.write("5/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t5" + "\n")
-                elif int(X.split()[8]) == 4:
+                elif int(X.split()[7]) == 4:
                     JLF.write("4/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t4" + "\n")
-                elif int(X.split()[8]) == 3:
+                elif int(X.split()[7]) == 3:
                     JLF.write("3/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t3" + "\n")
-                elif int(X.split()[8]) == 2:
+                elif int(X.split()[7]) == 2:
                     JLF.write("2/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t2" + "\n")
-                elif int(X.split()[8]) == 1:
+                elif int(X.split()[7]) == 1:
                     JLF.write("1/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t1" + "\n")
                 else:
                     pass
-
-shutil.copyfile('BangPai_DKPFaFangJiLi.txt', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txt')
-shutil.copyfile('BangPai_DKPFaFangJiLi.txts', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txts')
 
 pre_list = []
 zm = 1
@@ -219,7 +225,7 @@ if zm:
     for n in range(len(pre_list)):
         for m in range(len(pre_list[n])):
             if pre_list[n][m].strip().isdigit():
-                worksheet.write_number(n, m, int(pre_list[n][m].strip()))
+                worksheet.write_memberber(n, m, int(pre_list[n][m].strip()))
             else:
                 worksheet.write(n, m, pre_list[n][m])
 
@@ -231,4 +237,5 @@ if zm:
     shutil.move(xlsx_file_name, 'D:\Git-Source\wuxia-union\天雪初晴-双生逐梦-XLSX')
     os.system("explorer D:\Git-Source\wuxia-union\天雪初晴-双生逐梦-XLSX")
 else:
-    pass
+    shutil.copyfile('BangPai_DKPFaFangJiLi.txt', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txt')
+    shutil.copyfile('BangPai_DKPFaFangJiLi.txts', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txts')
