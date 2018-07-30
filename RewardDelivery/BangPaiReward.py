@@ -10,10 +10,10 @@ GLFile = "BangPai_DKPFaFangJiLi.txt"
 SLFile = "BangPai_DKPFaFangJiLi.txts"
 
 # Past File Clean
-# try:
-#     os.system("del Bangpai_DKPFa*.txt")
-# except OSError:
-#     print("Past files have already been cleaned.")
+try:
+    os.system("del Bangpai_DKPFa*.txt")
+except OSError:
+    print("Past files have already been cleaned.")
 
 tz = pytz.timezone('Asia/Hong_Kong')
 hk = datetime.datetime.now(tz)
@@ -55,7 +55,6 @@ def eventsimp(event):
     return simevent
 
 
-# 箱子发放计算 根据帮派情况自行调整
 def rewardcalc(member):
     defaultrw = 0
     # 委任
@@ -164,7 +163,7 @@ with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
                    + str(ind.zc) + '\t'
                    + str(ind.ld) + '\t'
                    + str(ind.zf) + '\t'
-                   + str(ind.xz) + '\n')
+                   + str(ind.zx) + '\n')
 
 # 激励文件部署
 with open("ExcelData.txt", 'r', encoding='utf-8') as Simpw:
@@ -211,7 +210,6 @@ with open("ExcelData.txt", 'r', encoding='utf-8') as Simpw:
                 else:
                     pass
 
-# 根据帮派情况自行调整 可注释或删除
 pre_list = []
 zm = 1
 
