@@ -10,10 +10,10 @@ GLFile = "BangPai_DKPFaFangJiLi.txt"
 SLFile = "BangPai_DKPFaFangJiLi.txts"
 
 # Past File Clean
-# try:
-#     os.system("del Bangpai_DKPFa*.txt")
-# except OSError:
-#     print("Past files have already been cleaned.")
+if os.path.isfile(GLFile):
+    os.system("del BangPai_DKPFaFangJiLi.txt")
+if os.path.isfile(SLFile):
+    os.system("del BangPai_DKPFaFangJiLi.txts")
 
 tz = pytz.timezone('Asia/Hong_Kong')
 hk = datetime.datetime.now(tz)
@@ -167,6 +167,14 @@ with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
                    + str(ind.xz) + '\n')
 
 # 激励文件部署
+# 奖励发放 Template 2018/07/30 fix 少了template导致第一位无法被正常读取
+Template = "发放激励\n领取情况\t帮众\t等级\t职位\t剩余PVP-DKP\t修改PVP-DKP\t剩余PVE-DKP\t修改PVE-DKP\t发放数量\n"
+
+with open(GLFile, 'w', encoding='utf-8') as init_gf:
+    init_gf.write(Template)
+with open(SLFile, 'w', encoding='utf-8') as init_sf:
+    init_sf.write(Template)
+
 with open("ExcelData.txt", 'r', encoding='utf-8') as Simpw:
     for X in Simpw.readlines()[1:]:
         if int(X.split()[7]) == 0:
