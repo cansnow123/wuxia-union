@@ -1,13 +1,14 @@
 ## 天涯明月刀 DKP数据统计脚本
 
 ### 简介
-从一开始的EXCEL和宏处理到现在使用Python完成几乎全部任务
-这个过程还是比较有趣的
+从一开始的EXCEL和宏处理到现在使用Python完成几乎全部任务  
+这个过程还是比较有趣的  
 仅用该项目来记录游戏历史及点点滴滴
 
 ### 提要
 
-**pytz**限定区域为**Asia/Hong_Kong**是因为人在澳洲，时差会导致当周日期无法和游戏内时间一致漏统数据
+人在澳洲，时差会导致当周日期无法和游戏内时间一致漏统数据  
+故**pytz**限定区域为**Asia/Hong_Kong**
 
 ### 使用方法
 
@@ -15,7 +16,7 @@
 
 分别用于帮派激励发放和联盟激励发放  
 
-**BangPaiReward.py**
+#### BangPaiReward.py
 
 在帮派管理界面导出帮派**DKP记录**以及帮派**DKP修改详单**  
 权限要求：帮主|副帮|军师  
@@ -25,7 +26,7 @@
 
 
 
-**UnionReward.py**
+#### UnionReward.py
 
 在联盟管理界面导出联盟**DKP记录**以及联盟**DKP修改详单**  
 权限要求：联盟龙首|DKP管理员  
@@ -35,7 +36,7 @@
 
 
 
-**激励发放**
+#### 激励发放
 
 将天刀安装文件夹**DKPData**内的**BangPai_DKP.txt**和**BangPai_DKPFaFangJiLi.txt**复制到与**BangPaiReward.py**/**UnionReward.py**同一目录下  
 运行**BangPaiReward.py**或**UnionReward.py**即可  
@@ -49,14 +50,16 @@
 
 以下两文件生成用于DEBUG和查询使用  
 
-**ExcelData.txt**
+#### ExcelData.txt
+
 该文件储存了当前周所有帮派/联盟成员的DKP获取记录 数据格式 分隔符为\t 可直接复制进EXCEL进行额外修改  
 数据已排序 默认按照应发金箱子数量降序 其次为委任数量  
 ![ExcelData](https://raw.githubusercontent.com/heiybb/wuxia-union/master/demopic/ExcelData.png)
 
 
 
-**SimDetails.txt**
+#### SimDetails.txt
+
 该文件储存了当前周所有帮派/联盟成员的DKP获取记录 文本格式 方便在DKP事件记录查询  
 ![SimDetails](https://raw.githubusercontent.com/heiybb/wuxia-union/master/demopic/SimDetails.png)
 
