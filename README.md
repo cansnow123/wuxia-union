@@ -16,7 +16,7 @@
 
 分别用于帮派激励发放和联盟激励发放  
 
-#### BangPaiReward.py
+#### 帮派DKP导出
 
 在帮派管理界面导出帮派**DKP记录**以及帮派**DKP修改详单**  
 权限要求：帮主|副帮|军师  
@@ -26,7 +26,7 @@
 
 
 
-#### UnionReward.py
+#### 联盟DKP导出
 
 在联盟管理界面导出联盟**DKP记录**以及联盟**DKP修改详单**  
 权限要求：联盟龙首|DKP管理员  
@@ -47,6 +47,8 @@
 ![Reward](https://raw.githubusercontent.com/heiybb/wuxia-union/master/demopic/Reward.png)
 
 
+
+### DEBUG文件
 
 以下两文件生成用于DEBUG和查询使用  
 
