@@ -8,17 +8,20 @@ import xlsxwriter
 GLFile = "BangPai_DKPFaFangJiLi.txt"
 SLFile = "BangPai_DKPFaFangJiLi.txts"
 
-tz = pytz.timezone('Asia/Hong_Kong')
-hk = datetime.datetime.now(tz)
+hk = datetime.datetime.now(pytz.timezone('Asia/Hong_Kong'))
 
 dates = []
+weekdays = []
+
 for i in range(0 - hk.weekday(), 9 - hk.weekday()):
     dates.append(hk + datetime.timedelta(days=i))
-weekdays = []
+
 for x in range(7):
     weekdays.append(dates[x].strftime("%Y/%m/%d"))
+
 print(weekdays)
 
+# 小号箱子转移
 Replace_Dict = [
     ['こ若若や', ['梨花雨落']],
     ['こ奉先や', ['快使用双节棍戳']]
@@ -156,10 +159,12 @@ for MemberRecord in BangPaiDKPList:
 # 使数据在EXCEL内美观
 TableData.sort(key=lambda member: (member.xz, member.wr), reverse=True)
 
+ExcelTemplate = "ID\t委任*10\t醉侠\t血战\t战场\t掠夺\t争锋\t资金\t玉石\t箱子"
+
 with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
-    Simp.write("ID\t委任*10\t醉侠\t血战\t战场\t掠夺\t争锋\t资金\t玉石\t箱子\n")
+    Simp.write(ExcelTemplate + '\n')
     for ind in TableData:
-        Simp.write(str(ind.id) + '\t'
+        Simp.write(ind.id + '\t'
                    + str(ind.wr) + '\t'
                    + str(ind.zx) + '\t'
                    + str(ind.jh) + '\t'
@@ -172,72 +177,76 @@ with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
 
 # 激励文件部署
 # 奖励发放 Template 2018/07/30 fix 少了template导致第一位无法被正常读取
-Template = "发放激励\n领取情况\t帮众\t等级\t职位\t剩余PVP-DKP\t修改PVP-DKP\t剩余PVE-DKP\t修改PVE-DKP\t发放数量\n"
+JiliTemplate = "发放激励\n领取情况\t帮众\t等级\t职位\t剩余PVP-DKP\t修改PVP-DKP\t剩余PVE-DKP\t修改PVE-DKP\t发放数量\n"
 
 with open(GLFile, 'w', encoding='utf-8') as init_gf:
-    init_gf.write(Template)
+    init_gf.write(JiliTemplate)
 with open(SLFile, 'w', encoding='utf-8') as init_sf:
-    init_sf.write(Template)
+    init_sf.write(JiliTemplate)
 
-with open("ExcelData.txt", 'r', encoding='utf-8') as Simpw:
-    for X in Simpw.readlines()[1:]:
-        if int(X.split()[9]) == 0:
-            pass
-        else:
-            # 银箱子
-            with open(SLFile, 'a', encoding='utf-8') as SLF:
-                if int(X.split()[9]) == 8:
-                    SLF.write("8/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
-                elif int(X.split()[9]) == 7:
-                    SLF.write("8/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
-                elif int(X.split()[9]) == 6:
-                    SLF.write("6/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t6" + "\n")
-                elif int(X.split()[9]) == 5:
-                    SLF.write("5/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t5" + "\n")
-                elif int(X.split()[9]) == 4:
-                    SLF.write("4/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t4" + "\n")
-                elif int(X.split()[9]) == 3:
-                    SLF.write("3/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t3" + "\n")
-                elif int(X.split()[9]) == 2:
-                    SLF.write("2/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t2" + "\n")
-                else:
-                    pass
-            # 金箱子
-            with open(GLFile, 'a', encoding='utf-8') as JLF:
-                if int(X.split()[9]) == 8:
-                    JLF.write("8/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
-                elif int(X.split()[9]) == 7:
-                    JLF.write("7/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t7" + "\n")
-                elif int(X.split()[9]) == 6:
-                    JLF.write("6/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t6" + "\n")
-                elif int(X.split()[9]) == 5:
-                    JLF.write("5/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t5" + "\n")
-                elif int(X.split()[9]) == 4:
-                    JLF.write("4/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t4" + "\n")
-                elif int(X.split()[9]) == 3:
-                    JLF.write("3/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t3" + "\n")
-                elif int(X.split()[9]) == 2:
-                    JLF.write("2/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t2" + "\n")
-                elif int(X.split()[9]) == 1:
-                    JLF.write("1/8\t" + X.split()[0] + "\t95\tX\t0\t0\t0\t0\t1" + "\n")
-                else:
-                    pass
+for MemberInTable in TableData:
+    if MemberInTable.xz == 0:
+        pass
+    else:
+        # 银箱子
+        with open(SLFile, 'a', encoding='utf-8') as SLF:
+            if MemberInTable.xz == 8:
+                SLF.write("8/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
+            elif MemberInTable.xz == 7:
+                SLF.write("8/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
+            elif MemberInTable.xz == 6:
+                SLF.write("6/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t6" + "\n")
+            elif MemberInTable.xz == 5:
+                SLF.write("5/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t5" + "\n")
+            elif MemberInTable.xz == 4:
+                SLF.write("4/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t4" + "\n")
+            elif MemberInTable.xz == 3:
+                SLF.write("3/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t3" + "\n")
+            elif MemberInTable.xz == 2:
+                SLF.write("2/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t2" + "\n")
+            else:
+                pass
+        # 金箱子
+        with open(GLFile, 'a', encoding='utf-8') as JLF:
+            if MemberInTable.xz == 8:
+                JLF.write("8/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
+            elif MemberInTable.xz == 7:
+                JLF.write("7/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t7" + "\n")
+            elif MemberInTable.xz == 6:
+                JLF.write("6/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t6" + "\n")
+            elif MemberInTable.xz == 5:
+                JLF.write("5/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t5" + "\n")
+            elif MemberInTable.xz == 4:
+                JLF.write("4/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t4" + "\n")
+            elif MemberInTable.xz == 3:
+                JLF.write("3/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t3" + "\n")
+            elif MemberInTable.xz == 2:
+                JLF.write("2/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t2" + "\n")
+            elif MemberInTable.xz == 1:
+                JLF.write("1/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t1" + "\n")
+            else:
+                pass
 
-# 根据帮派情况自行调整 可注释或删除
-pre_list = []
-with open("ExcelData.txt", 'r', encoding='utf-8') as Simp:
-    for x in Simp.readlines():
-        pre_list.append(x.split('\t'))
-
+# 输出Excel文件 最终文件名为 Excel数据+当前周日日期
 workbook = xlsxwriter.Workbook('Excel数据.xlsx')
 worksheet = workbook.add_worksheet()
 
-for n in range(len(pre_list)):
-    for m in range(len(pre_list[n])):
-        if pre_list[n][m].strip().isdigit():
-            worksheet.write_number(n, m, int(pre_list[n][m].strip()))
-        else:
-            worksheet.write(n, m, pre_list[n][m])
+# 写入Excel文件首行 ID\t委任*10\t醉侠\t血战\t战场\t掠夺\t争锋\t资金\t玉石\t箱子
+for x in range(len(ExcelTemplate.split('\t'))):
+    worksheet.write(0, x, ExcelTemplate.split('\t')[x])
+
+# 写入帮众DKP数据
+for row in range(len(TableData)):
+    worksheet.write(row + 1, 0, TableData[row].id)
+    worksheet.write(row + 1, 1, TableData[row].wr)
+    worksheet.write(row + 1, 2, TableData[row].zx)
+    worksheet.write(row + 1, 3, TableData[row].jh)
+    worksheet.write(row + 1, 4, TableData[row].zc)
+    worksheet.write(row + 1, 5, TableData[row].ld)
+    worksheet.write(row + 1, 6, TableData[row].zf)
+    worksheet.write(row + 1, 7, TableData[row].zj)
+    worksheet.write(row + 1, 8, TableData[row].ys)
+    worksheet.write(row + 1, 9, TableData[row].xz)
 
 workbook.close()
 
