@@ -10,10 +10,10 @@ GLFile = "BangPai_DKPFaFangJiLi.txt"
 SLFile = "BangPai_DKPFaFangJiLi.txts"
 
 # Past File Clean
-try:
-    os.system("del Bangpai_DKPFa*.txt")
-except OSError:
-    print("Past files have already been cleaned.")
+if os.path.isfile(GLFile):
+    os.system("del BangPai_DKPFaFangJiLi.txt")
+if os.path.isfile(SLFile):
+    os.system("del BangPai_DKPFaFangJiLi.txts")
 
 tz = pytz.timezone('Asia/Hong_Kong')
 hk = datetime.datetime.now(tz)
@@ -55,6 +55,12 @@ def eventsimp(event):
     return simevent
 
 
+# 箱子发放计算 根据帮派情况自行调整
+# 委任每70                 1个箱子 上限3个
+# 醉侠和血战海河州都完成    1个箱子
+# 帮派战场完成2场          3个箱子 否则为1个(单场) 0个(0场)
+# 掠夺战一次               1个箱子
+# 争锋战一个               2个箱子
 def rewardcalc(member):
     defaultrw = 0
     # 委任
@@ -163,9 +169,17 @@ with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
                    + str(ind.zc) + '\t'
                    + str(ind.ld) + '\t'
                    + str(ind.zf) + '\t'
-                   + str(ind.zx) + '\n')
+                   + str(ind.xz) + '\n')
 
 # 激励文件部署
+# 奖励发放 Template 2018/07/30 fix 少了template导致第一位无法被正常读取
+Template = "发放激励\n领取情况\t帮众\t等级\t职位\t剩余PVP-DKP\t修改PVP-DKP\t剩余PVE-DKP\t修改PVE-DKP\t发放数量\n"
+
+with open(GLFile, 'w', encoding='utf-8') as init_gf:
+    init_gf.write(Template)
+with open(SLFile, 'w', encoding='utf-8') as init_sf:
+    init_sf.write(Template)
+
 with open("ExcelData.txt", 'r', encoding='utf-8') as Simpw:
     for X in Simpw.readlines()[1:]:
         if int(X.split()[7]) == 0:
@@ -210,6 +224,7 @@ with open("ExcelData.txt", 'r', encoding='utf-8') as Simpw:
                 else:
                     pass
 
+# 根据帮派情况自行调整 可注释或删除
 pre_list = []
 zm = 1
 
@@ -225,7 +240,7 @@ if zm:
     for n in range(len(pre_list)):
         for m in range(len(pre_list[n])):
             if pre_list[n][m].strip().isdigit():
-                worksheet.write_memberber(n, m, int(pre_list[n][m].strip()))
+                worksheet.write_number(n, m, int(pre_list[n][m].strip()))
             else:
                 worksheet.write(n, m, pre_list[n][m])
 
