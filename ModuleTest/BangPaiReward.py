@@ -235,7 +235,7 @@ if zm:
     for n in range(len(pre_list)):
         for m in range(len(pre_list[n])):
             if pre_list[n][m].strip().isdigit():
-                worksheet.write_memberber(n, m, int(pre_list[n][m].strip()))
+                worksheet.write_number(n, m, int(pre_list[n][m].strip()))
             else:
                 worksheet.write(n, m, pre_list[n][m])
 
