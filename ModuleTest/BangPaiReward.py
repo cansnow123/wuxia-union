@@ -22,7 +22,8 @@ for x in range(7):
 
 print(weekdays)
 
-# 小号箱子转移
+# 小号箱子转移至大号
+# 左边大号右边小号
 Replace_Dict = [
     ['こ若若や', ['梨花雨落']],
     ['こ奉先や', ['快使用双节棍戳']]
@@ -43,14 +44,14 @@ def cvl(string):
     # # 删除消耗
     # step1 = re.sub("\s*\d+\s*\d+\s*\d+\s*$", "", line)
     # 删除帮众名后所有内容
-    name = re.sub("\s*[\u4e00-\u9fa5]+\s*\d+\s*\d+\s*\d+\s*$", "", string)
+    name = re.sub(r'\s*[\u4e00-\u9fa5]+\s*\d+\s*\d+\s*\d+\s*$', '', string)
     return name
 
 
 # 删除DKP事件内的2018/07/08 19:09    	时间标签防止后续DKP提取error
 # 待优化重构
 def timestampdel(string):
-    deleted = re.sub("\d{4}/\d{2}/\d{2} \d{2}:\d{2}\s*", "", string)
+    deleted = re.sub(r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}\s*', '', string)
     return deleted
 
 
@@ -106,19 +107,20 @@ class SingleRecord:
         self.xz = 0  # 箱子
 
 
-# 保存帮派名单至 BangPaiNameList
-BangPaiNameList = []
-with open("BangPai_DKP.txt", 'r', encoding='utf-8') as LMD:
-    for l in LMD.readlines()[3:]:
-        BangPaiNameList.append(cvl(l))
-
 # 保存帮派DKP详单至 BangPaiDKPList  [['余欢喜','20171201***','20171202***'],[***],[***]]
 Temp = [[] for x in range(150)]
 with open("BangPai_DKPModifyRecord.txt", 'r', encoding='utf-8') as DKPRecord:
     cot = 0
     for line in DKPRecord.readlines():
         if not line == '\n':
-            Temp[cot].append(line.strip())
+            # 对于DKP事件只保留当周
+            if bool(re.search(r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}\s*', line)):
+                for d in weekdays:
+                    if d in line:
+                        Temp[cot].append(line.strip())
+            # ID直接append
+            else:
+                Temp[cot].append(line.strip())
         else:
             cot = cot + 1
     print("帮派总人数：", cot)
@@ -131,9 +133,7 @@ with open("SimDetails.txt", 'w', encoding='utf-8') as RecordSimple:
         # [0]为帮派成员ID [1:] 为事件信息
         RecordSimple.write(MemberRecord[0] + '\n')
         for x in MemberRecord[1:]:
-            for d in weekdays:
-                if d in x:
-                    RecordSimple.write(str(x) + '\n')
+            RecordSimple.write(str(x) + '\n')
 
 # 简化为表格格式
 TableData = []
@@ -144,19 +144,17 @@ for MemberRecord in BangPaiDKPList:
     newRecord = ''
 
     for x in MemberRecord[1:]:
-        for d in weekdays:
-            if d in x:
-                newRecord += timestampdel(x)
-                # print(newRecord)
-    newSingleRecord.wr = sum(list(map(int, re.findall("(?<=帮派委任（)\d+", newRecord))))
+        newRecord += timestampdel(x)
+        # print(newRecord)
+    newSingleRecord.wr = sum(list(map(int, re.findall(r'(?<=帮派委任（)\d+', newRecord))))
     newSingleRecord.zx = newRecord.count('帮派醉侠')
     newSingleRecord.jh = newRecord.count('血战海河')
     newSingleRecord.zc = newRecord.count('帮派跨服战场')
     newSingleRecord.ld = newRecord.count('掠夺战')
     newSingleRecord.zf = newRecord.count('争锋战')
-    newSingleRecord.zj = sum(list(map(int, re.findall("(?<=资金（)\d+", newRecord))))
-    newSingleRecord.ys = sum(list(map(int, re.findall("(?<=玉石（)\d+", newRecord))))
-    newSingleRecord.dkp = sum(list(map(int, re.findall("(?<=DKP为)\d+", newRecord))))
+    newSingleRecord.zj = sum(list(map(int, re.findall(r'(?<=资金（)\d+', newRecord))))
+    newSingleRecord.ys = sum(list(map(int, re.findall(r'(?<=玉石（)\d+', newRecord))))
+    newSingleRecord.dkp = sum(list(map(int, re.findall(r'(?<=DKP为)\d+', newRecord))))
     newSingleRecord.xz = rewardcalc(newSingleRecord)
     TableData.append(newSingleRecord)
 
