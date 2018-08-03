@@ -60,10 +60,10 @@ def eventsimp(event):
 def rewardcalc(member):
     defaultrw = 0
     # 委任
-    if member.wr > 21:
+    if member.wr >= 210:
         defaultrw += 3
     else:
-        defaultrw += (member.wr // 7)
+        defaultrw += (member.wr // 70)
 
     # 醉虾 血战海河
     if member.zx and member.jh:
@@ -144,7 +144,7 @@ for MemberRecord in BangPaiDKPList:
             if d in x:
                 newRecord += x
                 # print(newRecord)
-    newSingleRecord.wr = newRecord.count('帮派委任')
+    newSingleRecord.wr = sum(list(map(int, re.findall("(?<=帮派委任（)\d+", newRecord))))
     newSingleRecord.zx = newRecord.count('帮派醉侠')
     newSingleRecord.jh = newRecord.count('血战海河')
     newSingleRecord.zc = newRecord.count('帮派跨服战场')
@@ -159,7 +159,7 @@ for MemberRecord in BangPaiDKPList:
 # 使数据在EXCEL内美观
 TableData.sort(key=lambda member: (member.xz, member.wr), reverse=True)
 
-ExcelTemplate = "ID\t委任*10\t醉侠\t血战\t战场\t掠夺\t争锋\t资金\t玉石\t箱子"
+ExcelTemplate = "ID\t委任\t醉侠\t血战\t战场\t掠夺\t争锋\t资金\t玉石\t箱子"
 
 with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
     Simp.write(ExcelTemplate + '\n')
