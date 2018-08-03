@@ -48,10 +48,11 @@ def cvl(string):
     return name
 
 
-# 删除DKP事件内的2018/07/08 19:09    	时间标签防止后续DKP提取error
-# 待优化重构
-def timestampdel(string):
-    deleted = re.sub(r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}\s*', '', string)
+# 删除DKP事件内的2018/07/08 19:09    	时间戳防止后续DKP提取error
+def timestampdel(eventlist):
+    deleted = []
+    for event in eventlist:
+        deleted.append(re.sub(r'\d{4}/\d{2}/\d{2} \d{2}:\d{2}\s*', '', event))
     return deleted
 
 
@@ -140,12 +141,9 @@ TableData = []
 
 for MemberRecord in BangPaiDKPList:
     newSingleRecord = SingleRecord()
-    newSingleRecord.id = MemberRecord[0]
-    newRecord = ''
+    newRecord = ''.join(timestampdel(MemberRecord[1:]))
 
-    for x in MemberRecord[1:]:
-        newRecord += timestampdel(x)
-        # print(newRecord)
+    newSingleRecord.id = MemberRecord[0]
     newSingleRecord.wr = sum(list(map(int, re.findall(r'(?<=帮派委任（)\d+', newRecord))))
     newSingleRecord.zx = newRecord.count('帮派醉侠')
     newSingleRecord.jh = newRecord.count('血战海河')
@@ -156,6 +154,7 @@ for MemberRecord in BangPaiDKPList:
     newSingleRecord.ys = sum(list(map(int, re.findall(r'(?<=玉石（)\d+', newRecord))))
     newSingleRecord.dkp = sum(list(map(int, re.findall(r'(?<=DKP为)\d+', newRecord))))
     newSingleRecord.xz = rewardcalc(newSingleRecord)
+
     TableData.append(newSingleRecord)
 
 # 优先按箱子数量降序排列其次为委任
