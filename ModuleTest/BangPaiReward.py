@@ -39,17 +39,19 @@ def s_tranfer(name):
     return name
 
 
-def cvl(line):
+def cvl(string):
     # # 删除消耗
     # step1 = re.sub("\s*\d+\s*\d+\s*\d+\s*$", "", line)
     # 删除帮众名后所有内容
-    name = re.sub("\s*[\u4e00-\u9fa5]+\s*\d+\s*\d+\s*\d+\s*$", "", line)
+    name = re.sub("\s*[\u4e00-\u9fa5]+\s*\d+\s*\d+\s*\d+\s*$", "", string)
     return name
 
 
-def eventsimp(event):
-    simevent = re.sub("的DKP为\d+", "", event)
-    return simevent
+# 删除DKP事件内的2018/07/08 19:09    	时间标签防止后续DKP提取error
+# 待优化重构
+def timestampdel(string):
+    deleted = re.sub("\d{4}/\d{2}/\d{2} \d{2}:\d{2}\s*", "", string)
+    return deleted
 
 
 # 箱子发放计算 根据帮派情况自行调整
@@ -100,6 +102,7 @@ class SingleRecord:
         self.zf = 0  # 争锋战
         self.zj = 0  # 资金
         self.ys = 0  # 玉石
+        self.dkp = 0  # DKP
         self.xz = 0  # 箱子
 
 
@@ -113,9 +116,9 @@ with open("BangPai_DKP.txt", 'r', encoding='utf-8') as LMD:
 Temp = [[] for x in range(150)]
 with open("BangPai_DKPModifyRecord.txt", 'r', encoding='utf-8') as DKPRecord:
     cot = 0
-    for l in DKPRecord.readlines():
-        if not l == '\n':
-            Temp[cot].append(eventsimp(l.strip()))
+    for line in DKPRecord.readlines():
+        if not line == '\n':
+            Temp[cot].append(line.strip())
         else:
             cot = cot + 1
     print("帮派总人数：", cot)
@@ -130,7 +133,7 @@ with open("SimDetails.txt", 'w', encoding='utf-8') as RecordSimple:
         for x in MemberRecord[1:]:
             for d in weekdays:
                 if d in x:
-                    RecordSimple.write(eventsimp(str(x)) + '\n')
+                    RecordSimple.write(str(x) + '\n')
 
 # 简化为表格格式
 TableData = []
@@ -143,7 +146,7 @@ for MemberRecord in BangPaiDKPList:
     for x in MemberRecord[1:]:
         for d in weekdays:
             if d in x:
-                newRecord += x
+                newRecord += timestampdel(x)
                 # print(newRecord)
     newSingleRecord.wr = sum(list(map(int, re.findall("(?<=帮派委任（)\d+", newRecord))))
     newSingleRecord.zx = newRecord.count('帮派醉侠')
@@ -153,6 +156,7 @@ for MemberRecord in BangPaiDKPList:
     newSingleRecord.zf = newRecord.count('争锋战')
     newSingleRecord.zj = sum(list(map(int, re.findall("(?<=资金（)\d+", newRecord))))
     newSingleRecord.ys = sum(list(map(int, re.findall("(?<=玉石（)\d+", newRecord))))
+    newSingleRecord.dkp = sum(list(map(int, re.findall("(?<=DKP为)\d+", newRecord))))
     newSingleRecord.xz = rewardcalc(newSingleRecord)
     TableData.append(newSingleRecord)
 
@@ -160,7 +164,7 @@ for MemberRecord in BangPaiDKPList:
 # 使数据在EXCEL内美观
 TableData.sort(key=lambda member: (member.xz, member.wr), reverse=True)
 
-ExcelTemplate = "ID\t委任\t醉侠\t血战\t战场\t掠夺\t争锋\t资金\t玉石\t箱子"
+ExcelTemplate = "ID\t委任\t醉侠\t血战\t战场\t掠夺\t争锋\t资金\t玉石\tDKP\t箱子"
 
 with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
     Simp.write(ExcelTemplate + '\n')
@@ -174,6 +178,7 @@ with open("ExcelData.txt", 'w', encoding='utf-8') as Simp:
                    + str(ind.zf) + '\t'
                    + str(ind.zj) + '\t'
                    + str(ind.ys) + '\t'
+                   + str(ind.dkp) + '\t'
                    + str(ind.xz) + '\n')
 
 # 激励文件部署
@@ -232,7 +237,7 @@ for MemberInTable in TableData:
 workbook = xlsxwriter.Workbook('Excel数据.xlsx')
 worksheet = workbook.add_worksheet()
 
-# 写入Excel文件首行 ID\t委任*10\t醉侠\t血战\t战场\t掠夺\t争锋\t资金\t玉石\t箱子
+# 写入Excel文件首行 ID\t委任\t醉侠\t血战\t战场\t掠夺\t争锋\t资金\t玉石\tDKP\t箱子
 for x in range(len(ExcelTemplate.split('\t'))):
     worksheet.write(0, x, ExcelTemplate.split('\t')[x])
 
@@ -247,7 +252,8 @@ for row in range(len(TableData)):
     worksheet.write(row + 1, 6, TableData[row].zf)
     worksheet.write(row + 1, 7, TableData[row].zj)
     worksheet.write(row + 1, 8, TableData[row].ys)
-    worksheet.write(row + 1, 9, TableData[row].xz)
+    worksheet.write(row + 1, 9, TableData[row].dkp)
+    worksheet.write(row + 1, 10, TableData[row].xz)
 
 workbook.close()
 
