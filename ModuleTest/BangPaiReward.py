@@ -1,8 +1,8 @@
 import datetime
 import os
-import pytz
 import re
 import shutil
+import pytz
 import xlsxwriter
 
 GLFile = "BangPai_DKPFaFangJiLi.txt"
@@ -10,6 +10,7 @@ SLFile = "BangPai_DKPFaFangJiLi.txts"
 
 hk = datetime.datetime.now(pytz.timezone('Asia/Hong_Kong'))
 
+# 计算当前周 周一到周日 日期
 dates = []
 weekdays = []
 
