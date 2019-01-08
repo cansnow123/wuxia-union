@@ -1,14 +1,12 @@
 import datetime
-import os
 import re
-import shutil
+from datetime import timedelta
 import pytz
-import xlsxwriter
 
 GLFile = "BangPai_DKPFaFangJiLi.txt"
-SLFile = "BangPai_DKPFaFangJiLi.txts"
+# SLFile = "BangPai_DKPFaFangJiLi.txts"
 
-hk = datetime.datetime.now(pytz.timezone('Asia/Hong_Kong'))
+hk = datetime.datetime.now(pytz.timezone('Asia/Hong_Kong')) - timedelta(days=3)
 
 # 计算当前周 周一到周日 日期
 dates = []
@@ -75,11 +73,12 @@ def rewardcalc(member):
         defaultrw += 1
 
     # 帮派战场
-    if member.zc == 2:
-        defaultrw += 3
-    else:
+    # if member.zc >= 2:
+    #    defaultrw += 3
+    #else:
         # 1或0
-        defaultrw += member.zc
+        #defaultrw += member.zc
+    defaultrw += member.zc
 
     # 掠夺
     defaultrw += member.ld
@@ -184,31 +183,11 @@ JiliTemplate = "发放激励\n领取情况\t帮众\t等级\t职位\t剩余PVP-DK
 
 with open(GLFile, 'w', encoding='utf-8') as init_gf:
     init_gf.write(JiliTemplate)
-with open(SLFile, 'w', encoding='utf-8') as init_sf:
-    init_sf.write(JiliTemplate)
 
 for MemberInTable in TableData:
     if MemberInTable.xz == 0:
         pass
     else:
-        # 银箱子
-        with open(SLFile, 'a', encoding='utf-8') as SLF:
-            if MemberInTable.xz == 8:
-                SLF.write("8/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
-            elif MemberInTable.xz == 7:
-                SLF.write("8/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t8" + "\n")
-            elif MemberInTable.xz == 6:
-                SLF.write("6/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t6" + "\n")
-            elif MemberInTable.xz == 5:
-                SLF.write("5/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t5" + "\n")
-            elif MemberInTable.xz == 4:
-                SLF.write("4/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t4" + "\n")
-            elif MemberInTable.xz == 3:
-                SLF.write("3/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t3" + "\n")
-            elif MemberInTable.xz == 2:
-                SLF.write("2/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t2" + "\n")
-            else:
-                pass
         # 金箱子
         with open(GLFile, 'a', encoding='utf-8') as JLF:
             if MemberInTable.xz == 8:
@@ -229,37 +208,3 @@ for MemberInTable in TableData:
                 JLF.write("1/8\t" + MemberInTable.id + "\t95\tX\t0\t0\t0\t0\t1" + "\n")
             else:
                 pass
-
-# 输出Excel文件 最终文件名为 Excel数据+当前周日日期
-workbook = xlsxwriter.Workbook('Excel数据.xlsx')
-worksheet = workbook.add_worksheet()
-
-# 写入Excel文件首行 ID\t委任\t醉侠\t血战\t战场\t掠夺\t争锋\t资金\t玉石\tDKP\t箱子
-for x in range(len(ExcelTemplate.split('\t'))):
-    worksheet.write(0, x, ExcelTemplate.split('\t')[x])
-
-# 写入帮众DKP数据
-for row in range(len(TableData)):
-    worksheet.write(row + 1, 0, TableData[row].id)
-    worksheet.write(row + 1, 1, TableData[row].wr)
-    worksheet.write(row + 1, 2, TableData[row].zx)
-    worksheet.write(row + 1, 3, TableData[row].jh)
-    worksheet.write(row + 1, 4, TableData[row].zc)
-    worksheet.write(row + 1, 5, TableData[row].ld)
-    worksheet.write(row + 1, 6, TableData[row].zf)
-    worksheet.write(row + 1, 7, TableData[row].zj)
-    worksheet.write(row + 1, 8, TableData[row].ys)
-    worksheet.write(row + 1, 9, TableData[row].dkp)
-    worksheet.write(row + 1, 10, TableData[row].xz)
-
-workbook.close()
-
-xlsx_file_name = re.sub(r'/', '', str('Excel数据' + weekdays[6] + '.xlsx'))
-print(xlsx_file_name)
-shutil.move('Excel数据.xlsx', xlsx_file_name)
-
-# shutil.move(xlsx_file_name, 'D:\Git-Source\wuxia-union\天雪初晴-双生逐梦-XLSX')
-# os.system("explorer D:\Git-Source\wuxia-union\天雪初晴-双生逐梦-XLSX")
-#
-# shutil.copyfile('BangPai_DKPFaFangJiLi.txt', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txt')
-# shutil.copyfile('BangPai_DKPFaFangJiLi.txts', 'D:\Wuxia\天涯明月刀\DKPData\BangPai_DKPFaFangJiLi.txts')
